@@ -25,8 +25,7 @@ class ProductController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        $categories=Category::all();
+    {  $categories=Category::all();
        return view("products.create",compact("categories"));
     }
 
@@ -40,18 +39,17 @@ class ProductController extends Controller
        $file->storeAs("images",$name,"public");
        $input["path"]=$name;
        $input=$request->all();
-       $productCreate=Product::create($input);
-       if(!$productCreate){
-        echo "Product Not Created";
+       $existProduct=Product::where("name",$request->name)->where("category_id",$request->category_id)->first();
+       if($existProduct){
+       $existProduct->quantity++;
+       $existProduct->save();
+
        }else{
         Product::create($input);
+
        }
 
-
-      return redirect()->route("products.index");
-
-
-
+     return redirect()->route("products.index");
     }
 
     /**

@@ -10,6 +10,11 @@
 </head>
 
 <body>
+
+
+    <a href="/"
+        class=" btn btn-accent my-[20px] text-3xl font-mono font-semibold p-[40px] ms-[20px] text-white transition-all duration-300 ease-in-out hover:scale-110 ">Home</a>
+
     <a href="{{ route('categories.create') }}"
         class=" btn btn-primary my-[20px] text-3xl font-mono font-semibold p-[40px] ms-[20px] text-white transition-all duration-300 ease-in-out hover:scale-110 ">Create
         Category</a>

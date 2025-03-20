@@ -19,7 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::resource("categories","\App\Http\Controllers\CategoryController");
 });
 
-
+Route::resource("products","\App\Http\Controllers\ProductController");
+Route::resource("categories","\App\Http\Controllers\CategoryController");
 
 
 

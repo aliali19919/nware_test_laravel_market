@@ -10,7 +10,8 @@
 </head>
 
 <body>
-
+    <a href="/"
+        class=" btn btn-accent my-[20px] text-3xl font-mono font-semibold p-[40px] ms-[20px] text-white transition-all duration-300 ease-in-out hover:scale-110 ">Home</a>
     <a href="{{ route('products.create') }}"
         class=" btn btn-primary my-[20px] mx-[10px] text-3xl font-mono font-semibold p-[40px] ms-[20px] text-white transition-all duration-300 ease-in-out hover:scale-110 ">Create
         Product</a>
@@ -25,6 +26,7 @@
                     <th class="text-2xl">Product ID</th>
                     <th class="text-2xl">Product Name</th>
                     <th class="text-2xl">Product Price</th>
+                    <th class="text-2xl">Quantity</th>
                     <th class="text-2xl">Image Path</th>
                     <th class="text-2xl">Category</th>
                     <th class="text-2xl">Action</th>
@@ -38,6 +40,7 @@
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->price }}</td>
+                        <td>{{ $product->quantity }}</td>
                         <td>{{ $product->path }}</td>
                         <td>{{ $product->category->category }}</td>
                         <td class="flex gap-[20px]">
