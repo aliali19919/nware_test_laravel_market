@@ -18,7 +18,8 @@ class ProductController extends Controller
     {
 
         $products = Product::with('category')->get();
-        return view("products.index", compact("products"));
+        $totalQuantity=Product::all()->sum("quantity");
+        return view("products.index", compact("products","totalQuantity"));
     }
 
     /**

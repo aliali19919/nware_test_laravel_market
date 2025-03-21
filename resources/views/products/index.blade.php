@@ -10,6 +10,8 @@
 </head>
 
 <body>
+    <a href="#"
+        class=" btn btn-active my-[20px] text-3xl font-mono font-extrabold p-[40px] ms-[20px]  cursor-text ">TotalQuantity:{{ $totalQuantity }}</a>
     <a href="/"
         class=" btn btn-accent my-[20px] text-3xl font-mono font-semibold p-[40px] ms-[20px] text-white transition-all duration-300 ease-in-out hover:scale-110 ">Home</a>
     <a href="{{ route('products.create') }}"
