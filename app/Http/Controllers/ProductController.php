@@ -23,11 +23,16 @@ class ProductController extends Controller
        $totalQuantity=Product::all()->sum("quantity");
        $sortPrice= $request->input("sort_price");
        $sortQuantity= $request->input("sort_quantity");
+       $trashed=$request->input("trashed");
         if($sortPrice=="price"){
             $products = Product::orderBy("price")->with('category')->get();
         }elseif($sortQuantity=="quantity"){
          $products = Product::orderBy("quantity")->with('category')->get();
-        }else{
+        }elseif($trashed==="trashed"){
+            $products=Product::onlyTrashed()->with("category")->get();
+
+        }
+        else{
             $products = Product::with('category')->get();
         }
 
@@ -64,7 +69,7 @@ class ProductController extends Controller
 
        }
        }else{
-        return"Please Upload the image";
+        return"Please Upload the image 📤";
        }
        return redirect()->route("products.index");
     }
@@ -118,7 +123,7 @@ class ProductController extends Controller
     }
     }
     }else{
-        return"Please Upload the file";
+        return"Please Upload the image 📤";
     }
     }
 
@@ -132,7 +137,7 @@ class ProductController extends Controller
         if(!$product){
             echo" Product Not Found";
         }else{
-        $deleteProduct=Product::findOrFail($id)->delete();
+        $deleteProduct=Product::findOrFail($id)->destroy($id);
         if(!$deleteProduct){
             echo"Unsscssfully Deleted";
         }else{
@@ -140,6 +145,22 @@ class ProductController extends Controller
             return redirect()->route("products.index");
         }
         }
+
+    }
+    public function trashProduct($id){
+        Product::find($id)->delete();
+        return redirect()->route("products.index");
+    }
+
+    public function publishProduct($id){
+       $product=Product::onlyTrashed()->find($id);
+       if(!$product){
+        return "Product Not In The Trash ✋🏻🛑⛔️❗⚠️";
+       }else{
+        $product->restore();
+        return redirect()->route('products.index');
+       }
+
 
     }
     public function incQuantity($id){
@@ -159,6 +180,8 @@ class ProductController extends Controller
 
 
     }
+
+
 
 
 }

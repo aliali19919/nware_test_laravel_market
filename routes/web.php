@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::resource("categories","App\Http\Controllers\CategoryController");
     Route::get("product/increase-quantity/{id}","App\Http\Controllers\ProductController@incQuantity");
     Route::get("product/decrease-quantity/{id}","App\Http\Controllers\ProductController@decQuantity");
+    Route::get("product/{id}/trash","App\Http\Controllers\ProductController@trashProduct");
+    Route::get("product/{id}/publish","App\Http\Controllers\ProductController@publishProduct");
 
 });
 
