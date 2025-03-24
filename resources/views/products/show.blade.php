@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    @include('layouts.navigation')
 
     <div class="m-auto flex justify-center items-center my-[30px]">
         <div class="card  bg-blue-400 text-primary-content w-96 text-center">
@@ -33,6 +34,7 @@
 
         </div>
     </div>
+    @include('layouts.footer')
 </body>
 
 </html>

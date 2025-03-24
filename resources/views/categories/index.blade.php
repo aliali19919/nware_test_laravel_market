@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    @include('layouts.navigation')
 
 
     <a href="/"
@@ -49,29 +50,7 @@
             @endforeach
         </table>
     </div>
-    {{-- <div class="overflow-x-auto">
-        <table class="table">
-
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>ID</th>
-                    <th>Category</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach ($categories as $category)
-                    <tr>{{ $category->id }}</tr>
-                    <tr>{{ $category->category }}</tr>
-                    <tr><a href="">View Category Products</a>
-                    </tr>
-                @endforeach
-
-            </tbody>
-        </table>
-    </div> --}}
+    @include('layouts.footer')
 </body>
 
 </html>

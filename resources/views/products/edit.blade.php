@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+    @include('layouts.navigation')
     <div class="bg-gray-100 flex items-center justify-center min-h-screen">
         <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md transition-transform ">
             <h1 class="text-4xl font-serif font-bold text-center">Update Product ✏️📦</h1>
@@ -54,6 +54,8 @@
             </a>
         </div>
     </div>
+
+    @include('layouts.footer')
 
 </body>
 

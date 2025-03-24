@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    @include('layouts.navigation')
     <h1 class=" text-center p-[20px] font-mono text-4xl font-bold">{{ $category->category }}</h1>
     <div class=" grid grid-cols-4 gap-[20px] ">
         @foreach ($category->products as $product)
@@ -28,6 +29,7 @@
         To
         Category</a>
     </div>
+    @include('layouts.footer')
 </body>
 
 </html>

@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    @include('layouts.navigation')
 
     <div class="flex justify-center items-center min-h-screen bg-gray-100">
         <form action="{{ route('categories.store') }}" method="POST"
@@ -25,5 +26,6 @@
         </form>
     </div>
 </body>
+@include('layouts.footer')
 
 </html>
