@@ -7,8 +7,9 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
-
-
+use Illuminate\Support\Facades\Http;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -65,11 +66,15 @@ class ProductController extends Controller
        $existProduct->save();
 
        }else{
-        Product::create($input);
 
+        Product::create($input);
+        Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Created"]);
        }
        }else{
-        return"Please Upload the image 📤";
+
+        Alert::warning('📤', 'Please Upload the image');
+        Http::post("http://127.0.0.1:8001/api/logs",["level"=>"warning","message"=>"Product Failed to Create"]);
+        return redirect()->route('products.create');
        }
        return redirect()->route("products.index");
     }
@@ -104,7 +109,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
+        Log::info('request');
     $input=$request->all();
     $file=$request->file("file");
     if($file){
@@ -119,11 +124,15 @@ class ProductController extends Controller
     if(!$updatedProduct){
         echo"Failed To Update";
     }else{
+    Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Updated"]);
     return redirect()->route("products.index");
     }
     }
     }else{
-        return"Please Upload the image 📤";
+
+        Alert::warning('⚠️', 'Please Upload the image📤');
+        Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Failed Updated"]);
+        return redirect()->route('products.index');
     }
     }
 
@@ -141,7 +150,7 @@ class ProductController extends Controller
         if(!$deleteProduct){
             echo"Unsscssfully Deleted";
         }else{
-            echo "Sucssfully Deleted";
+            Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Permanently Delete"]);
             return redirect()->route("products.index");
         }
         }
@@ -155,10 +164,15 @@ class ProductController extends Controller
     public function publishProduct($id){
        $product=Product::onlyTrashed()->find($id);
        if(!$product){
-        return "Product Not In The Trash ✋🏻🛑⛔️❗⚠️";
+       Http::post("http://127.0.0.1:8001/api/logs",["level"=>"warning","message"=>"Product Not In Trash"]);
+       Alert::error('❌', 'Product Not Trashed 🗑️');
+       return redirect()->route('products.index');
        }else{
         $product->restore();
+        Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Published"]);
+        Alert::success('🚀', 'Product Published');
         return redirect()->route('products.index');
+
        }
 
 
@@ -167,6 +181,7 @@ class ProductController extends Controller
         $product=Product::find($id);
         $product->quantity++;
         $product->save();
+
         return redirect()->route("products.index");
 
 
@@ -174,10 +189,15 @@ class ProductController extends Controller
 
     public function decQuantity($id){
         $product=Product::find($id);
+        if($product->quantity <= 0){
+            $product->quantity = 0;
+            Alert::error('❌', 'Product Quantity 🟰 0');
+            return redirect()->route("products.index");
+        }else{
         $product->quantity--;
         $product->save();
         return redirect()->route("products.index");
-
+        }
 
     }
 

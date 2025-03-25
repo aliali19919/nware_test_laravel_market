@@ -71,6 +71,7 @@
         </div>
     </div>
     @include('layouts.footer')
+    @include('sweetalert::alert')
 
 </body>
 

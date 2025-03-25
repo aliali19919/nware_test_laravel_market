@@ -14,12 +14,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-      $middleware->alias([
+        $middleware->validateCsrfTokens(except:["api/logs"]);
+        $middleware->alias([
         "admin"=>IsAdminMiddleWare::class,
         "staff"=>IsStaffMiddleWare::class,
         "role"=>RoleMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+
         //
     })->create();

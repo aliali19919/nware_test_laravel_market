@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
     @include('layouts.navigation')
     <div class="my-[10px]">
         <a href="#"
@@ -29,7 +30,7 @@
             </ul>
         </div>
         <a href="{{ route('products.index', ['trashed' => 'trashed']) }}"
-            class=" btn btn-error my-[20px] text-3xl font-mono font-semibold p-[40px] ms-[20px] text-white transition-all duration-300 ease-in-out hover:scale-110 ">Trashed🗑️</a>
+            class=" btn btn-error my-[20px] text-3xl font-mono font-semibold p-[40px] ms-[20px] text-white transition-all duration-300 ease-in-out hover:scale-110 ">Trash🗑️</a>
         <a href="{{ route('products.create') }}"
             class=" btn btn-primary my-[20px] mx-[10px] text-3xl font-mono font-semibold p-[40px] ms-[20px] text-white transition-all duration-300 ease-in-out hover:scale-110 ">Create
             Product</a>
@@ -73,7 +74,7 @@
                             <td>{{ $product->category->category }}</td>
                             <td class="flex gap-[20px]">
                                 <a href="{{ route('products.edit', $product->id) }}"
-                                    class=" btn text-xl btn-primary transition-all duration-300 ease-in-out hover:scale-110">Update</a>
+                                    class=" btn text-xl btn-accent transition-all duration-300 ease-in-out hover:scale-110">Update</a>
                                 <a href="{{ route('products.show', $product->id) }} "
                                     class="btn text-xl btn-info transition-all duration-300 ease-in-out hover:scale-110">View</a>
                                 <div class="dropdown dropdown-end">
@@ -107,7 +108,7 @@
         </div>
     </div>
     @include('layouts.footer')
-
+    @include('sweetalert::alert')
 </body>
 
 </html>
