@@ -8,6 +8,9 @@ use App\Http\Middleware\IsAdminMiddleWare;
 use App\Http\Middleware\IsStaffMiddleWare;
 use App\Http\Middleware\RoleMiddleware;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
+
+use function Pest\Laravel\get;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::get("product/decrease-quantity/{id}","App\Http\Controllers\ProductController@decQuantity");
     Route::get("product/{id}/trash","App\Http\Controllers\ProductController@trashProduct");
     Route::get("product/{id}/publish","App\Http\Controllers\ProductController@publishProduct");
+    // Route::get("test",function(){
+    // //    Log::channel("mylog")->error("no request sent");
+
+    // });
 
 });
 

@@ -1,9 +1,12 @@
 <?php
 
+use App\Logging\CustomLogger;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
+
+use function Psy\debug;
 
 return [
 
@@ -126,6 +129,12 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        "mylog"=>[
+            "driver"=>"custom",
+            "via"=>CustomLogger::class,
+            "level"=>"debug"
+        ]
 
     ],
 

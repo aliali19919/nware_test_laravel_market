@@ -62,39 +62,46 @@
                             <td>
                                 <div class="flex gap-[5px] justify-center items-center">
                                     <p>{{ $product->quantity }}</p>
-                                    <a href=" product/increase-quantity/{{ $product->id }}"
-                                        class="btn btn-primary font-mono transition-all duration-200 hover:scale-110">Add</a>
-                                    <a href="product/decrease-quantity/{{ $product->id }}"
-                                        class="btn btn-warning font-mono transition-all duration-200 hover:scale-110">Reduce</a>
-                                    <div>
+                                    @if (!$trashed)
+                                        <a href=" product/increase-quantity/{{ $product->id }}"
+                                            class="btn btn-primary font-mono transition-all duration-200 hover:scale-110">Add</a>
+                                        <a href="product/decrease-quantity/{{ $product->id }}"
+                                            class="btn btn-warning font-mono transition-all duration-200 hover:scale-110">Reduce</a>
+                                        <div>
+                                    @endif
+
                             </td>
                             <td><img src="{{ asset('images/' . $product->path) }}"
                                     class=" w-[70px] h-[70px] rounded-full object-center transition-all duration-200 hover:scale-110   ">
                             </td>
                             <td>{{ $product->category->category }}</td>
+
                             <td class="flex gap-[20px]">
-                                <a href="{{ route('products.edit', $product->id) }}"
-                                    class=" btn text-xl btn-accent transition-all duration-300 ease-in-out hover:scale-110">Update</a>
-                                <a href="{{ route('products.show', $product->id) }} "
-                                    class="btn text-xl btn-info transition-all duration-300 ease-in-out hover:scale-110">View</a>
-                                <div class="dropdown dropdown-end">
-                                    <div tabindex="0" role="button"
-                                        class="btn btn-error text-xl transition-all duration-300 ease-in-out hover:scale-110">
-                                        Trash/Delete 🔽</div>
-                                    <ul tabindex="0"
-                                        class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm text-lg">
-                                        <li><a href="product/{{ $product->id }}/trash">Trash🚮</a>
-                                        </li>
-                                        <li>
-                                            <form action="{{ route('products.destroy', $product->id) }}"
-                                                method="POST">
-                                                {{ csrf_field() }}
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <input type="submit" value="Delete❌ ">
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </div>
+                                @if (!$trashed)
+                                    <a href="{{ route('products.edit', $product->id) }}"
+                                        class=" btn text-xl btn-accent transition-all duration-300 ease-in-out hover:scale-110">Update</a>
+                                    <a href="{{ route('products.show', $product->id) }} "
+                                        class="btn text-xl btn-info transition-all duration-300 ease-in-out hover:scale-110">View</a>
+                                    <div class="dropdown dropdown-end">
+                                        <div tabindex="0" role="button"
+                                            class="btn btn-error text-xl transition-all duration-300 ease-in-out hover:scale-110">
+                                            Trash/Delete 🔽</div>
+                                        <ul tabindex="0"
+                                            class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm text-lg">
+                                            <li><a href="product/{{ $product->id }}/trash">Trash🚮</a>
+                                            </li>
+                                            <li>
+                                                <form action="{{ route('products.destroy', $product->id) }}"
+                                                    method="POST">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="submit" value="Delete❌ ">
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <a href="product/{{ $product->id }}/publish"
                                     class="btn text-xl btn-primary transition-all duration-300 ease-in-out hover:scale-110">Publish</a>
 

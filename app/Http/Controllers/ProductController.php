@@ -37,7 +37,7 @@ class ProductController extends Controller
             $products = Product::with('category')->get();
         }
 
-        return view("products.index", compact("products","totalQuantity"));
+        return view("products.index", compact("products","totalQuantity","trashed"));
     }
 
     /**
@@ -68,12 +68,13 @@ class ProductController extends Controller
        }else{
 
         Product::create($input);
-        Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Created"]);
+        Log::channel("mylog")->info("Product Created",$input);
+        // Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Created"]);
        }
        }else{
 
         Alert::warning('📤', 'Please Upload the image');
-        Http::post("http://127.0.0.1:8001/api/logs",["level"=>"warning","message"=>"Product Failed to Create"]);
+        // Http::post("http://127.0.0.1:8001/api/logs",["level"=>"warning","message"=>"Product Failed to Create"]);
         return redirect()->route('products.create');
        }
        return redirect()->route("products.index");
@@ -91,6 +92,7 @@ class ProductController extends Controller
         if(!$product){
             echo" Product Not Found";
         }else{
+            Log::channel("mylog")->warning("Product Not Found");
           return view("products.show",compact("product"));
         }
     }
@@ -124,14 +126,16 @@ class ProductController extends Controller
     if(!$updatedProduct){
         echo"Failed To Update";
     }else{
-    Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Updated"]);
+    // Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Updated"]);
+    Log::channel("mylog")->info("Product Updated",$input);
     return redirect()->route("products.index");
     }
     }
     }else{
 
         Alert::warning('⚠️', 'Please Upload the image📤');
-        Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Failed Updated"]);
+        Log::channel("mylog")->warning("Unable to Update Product");
+        // Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Failed Updated"]);
         return redirect()->route('products.index');
     }
     }
@@ -150,7 +154,8 @@ class ProductController extends Controller
         if(!$deleteProduct){
             echo"Unsscssfully Deleted";
         }else{
-            Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Permanently Delete"]);
+            Log::channel("mylog")->info("Product Deleted");
+            // Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Permanently Delete"]);
             return redirect()->route("products.index");
         }
         }
@@ -164,12 +169,13 @@ class ProductController extends Controller
     public function publishProduct($id){
        $product=Product::onlyTrashed()->find($id);
        if(!$product){
-       Http::post("http://127.0.0.1:8001/api/logs",["level"=>"warning","message"=>"Product Not In Trash"]);
+
+    //    Http::post("http://127.0.0.1:8001/api/logs",["level"=>"warning","message"=>"Product Not In Trash"]);
        Alert::error('❌', 'Product Not Trashed 🗑️');
        return redirect()->route('products.index');
        }else{
         $product->restore();
-        Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Published"]);
+        // Http::post("http://127.0.0.1:8001/api/logs",["level"=>"info","message"=>"Product Published"]);
         Alert::success('🚀', 'Product Published');
         return redirect()->route('products.index');
 
@@ -192,6 +198,7 @@ class ProductController extends Controller
         if($product->quantity <= 0){
             $product->quantity = 0;
             Alert::error('❌', 'Product Quantity 🟰 0');
+            // Http::post("http://127.0.0.1:8001/api/logs",["level"=>"warning","message"=>"Product Quantity can't be below zero"]);
             return redirect()->route("products.index");
         }else{
         $product->quantity--;
